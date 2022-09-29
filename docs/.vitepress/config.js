@@ -1,4 +1,8 @@
 export default {
-  title: "VitePress",
-  description: "Just playing around.",
+  title: "Luowei's Blog",
+  description: "",
+  markdown: {
+    theme: "material-palenight",
+    lineNumbers: true,
+  },
 };
