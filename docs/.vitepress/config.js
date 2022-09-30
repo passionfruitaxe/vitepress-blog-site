@@ -1,8 +1,41 @@
+// import anchor from "markdown-it-anchor";
+
 export default {
   title: "Luowei's Blog",
-  description: "",
+  lang: "zh-CN",
+  lastUpdated: true,
+  head: [["link", { rel: "icon", href: `/logo.jpg` }]],
   markdown: {
     theme: "material-palenight",
     lineNumbers: true,
+  },
+  themeConfig: {
+    siteTitle: "Luowei's Blog",
+    description: "个人博客",
+    logo: "/logo.jpg",
+    outlineTitle: "目录",
+    lastUpdatedText: "上次更新时间",
+    editLink: {
+      pattern: "https://github.com/FrontEndMST/virepress-blog-site",
+      text: "在Github上编辑此页",
+    },
+    footer: {
+      message: "Released under the MIT License.",
+      copyright: "Copyright © 2022-present Luo Wei",
+    },
+    // 广告
+    // carbonAds: {
+    //   code: "your-carbon-code",
+    //   placement: "your-carbon-placement",
+    // },
+    nav: [{ text: "LeetCode周赛题解", link: "/leetcode/313-10-2" }],
+    sidebar: {
+      "/leetcode/": [
+        {
+          text: "场次",
+          items: [{ text: "第313场(2022.10.2)" }],
+        },
+      ],
+    },
   },
 };
