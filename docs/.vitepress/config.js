@@ -40,7 +40,7 @@ export default {
       ],
       "/leetcode/": [
         {
-          text: "场次",
+          text: "2022年10月",
           items: [{ text: "第313场(2022.10.2)", link: "/leetcode/313-10-2" }],
         },
       ],
