@@ -1,10 +1,8 @@
-// import anchor from "markdown-it-anchor";
-
 export default {
   title: "Luowei's Blog",
   lang: "zh-CN",
   lastUpdated: true,
-  head: [["link", { rel: "icon", href: `/logo.jpg` }]],
+  head: [["link", { rel: "icon", href: "/favicon.ico" }]],
   markdown: {
     theme: "material-palenight",
     lineNumbers: true,
@@ -28,12 +26,22 @@ export default {
     //   code: "your-carbon-code",
     //   placement: "your-carbon-placement",
     // },
-    nav: [{ text: "LeetCode周赛题解", link: "/leetcode/313-10-2" }],
+    nav: [
+      { text: "首页", link: "/" },
+      { text: "博客", link: "/guide/test" },
+      { text: "LeetCode周赛题解", link: "/leetcode/313-10-2" },
+    ],
     sidebar: {
+      "/guide/": [
+        {
+          text: "博客",
+          items: [{ text: "test", link: "/guide/test" }],
+        },
+      ],
       "/leetcode/": [
         {
           text: "场次",
-          items: [{ text: "第313场(2022.10.2)" }],
+          items: [{ text: "第313场(2022.10.2)", link: "/leetcode/313-10-2" }],
         },
       ],
     },
