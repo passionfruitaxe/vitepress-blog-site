@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: View Blog
-      link: /guide/test
+      link: /guide/blog/config
     - theme: alt
       text: View on GitHub
       link: https://github.com/FrontEndMST/virepress-blog-site

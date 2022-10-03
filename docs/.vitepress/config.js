@@ -1,3 +1,5 @@
+import { LOGO, GITHUB_URL, BLOG_PREFIX, LEETCODE_PREFIX } from "./global";
+
 export default {
   title: "Luowei's Blog",
   lang: "zh-CN",
@@ -10,11 +12,11 @@ export default {
   themeConfig: {
     siteTitle: "Luowei's Blog",
     description: "个人博客",
-    logo: "/logo.jpg",
+    logo: LOGO,
     outlineTitle: "目录",
     lastUpdatedText: "上次更新时间",
     editLink: {
-      pattern: "https://github.com/FrontEndMST/virepress-blog-site",
+      pattern: GITHUB_URL,
       text: "在Github上编辑此页",
     },
     footer: {
@@ -28,20 +30,23 @@ export default {
     // },
     nav: [
       { text: "首页", link: "/" },
-      { text: "博客", link: "/guide/test" },
-      { text: "LeetCode周赛题解", link: "/leetcode/313-10-2" },
+      { text: "博客", link: `${BLOG_PREFIX}/config` },
+      { text: "LeetCode周赛题解", link: `${LEETCODE_PREFIX}/313-10-2` },
     ],
     sidebar: {
-      "/guide/": [
+      "/guide/blog/": [
         {
           text: "博客",
-          items: [{ text: "test", link: "/guide/test" }],
+          collapsible: true,
+          items: [{ text: "config", link: `${BLOG_PREFIX}/config` }],
         },
       ],
       "/leetcode/": [
         {
           text: "2022年10月",
-          items: [{ text: "第313场(2022.10.2)", link: "/leetcode/313-10-2" }],
+          items: [
+            { text: "第313场(2022.10.2)", link: `${LEETCODE_PREFIX}/313-10-2` },
+          ],
         },
       ],
     },
