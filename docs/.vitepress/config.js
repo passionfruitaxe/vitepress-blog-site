@@ -45,7 +45,22 @@ export default {
         {
           text: "2022年10月",
           items: [
-            { text: "第313场(2022.10.2)", link: `${LEETCODE_PREFIX}/313-10-2` },
+            {
+              text: "第313场(2022.10.2)",
+              link: `${LEETCODE_PREFIX}/313-10-2`,
+            },
+            {
+              text: "第314场(2022.10.9)",
+              link: `${LEETCODE_PREFIX}/314-10-9`,
+            },
+            {
+              text: "第315场(2022.10.16)",
+              link: `${LEETCODE_PREFIX}/315-10-16`,
+            },
+            {
+              text: "第316场(2022.10.23)",
+              link: `${LEETCODE_PREFIX}/316-10-23`,
+            },
           ],
         },
       ],
