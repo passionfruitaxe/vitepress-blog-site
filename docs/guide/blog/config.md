@@ -4,32 +4,34 @@
 
 URL: [PassionFruitAXE/vite-template-react (github.com)](https://github.com/PassionFruitAXE/vite-template-react)
 
-## 依赖
+## webpack 依赖
+
+## webpack.config.js
+
+## vite 依赖
 
 ```json
 {
-  	"@vitejs/plugin-legacy": "^2.0.0",
-    "@vitejs/plugin-react": "^2.0.0",
-    "eslint": "8.20.0",
-    "eslint-config-prettier": "8.5.0",
-    "eslint-plugin-prettier": "4.2.1",
-    "eslint-plugin-react": "7.30.1",
-    "prettier": "2.7.1",
-    "stylelint": "^14.9.1",
-    "stylelint-config-prettier": "^9.0.3",
-    "stylelint-config-recess-order": "^3.0.0",
-    "stylelint-config-standard": "^26.0.0",
-    "stylelint-prettier": "^2.0.0",
-    "terser": "^5.14.2",
-    "typescript": "4.7.4",
-    "vite": "^3.0.2",
-    "vite-plugin-eslint": "^1.7.0",
-    "vite-plugin-mkcert": "1.9.0",
-    "vite-tsconfig-paths": "3.5.0"
+  "@vitejs/plugin-legacy": "^2.0.0",
+  "@vitejs/plugin-react": "^2.0.0",
+  "eslint": "8.20.0",
+  "eslint-config-prettier": "8.5.0",
+  "eslint-plugin-prettier": "4.2.1",
+  "eslint-plugin-react": "7.30.1",
+  "prettier": "2.7.1",
+  "stylelint": "^14.9.1",
+  "stylelint-config-prettier": "^9.0.3",
+  "stylelint-config-recess-order": "^3.0.0",
+  "stylelint-config-standard": "^26.0.0",
+  "stylelint-prettier": "^2.0.0",
+  "terser": "^5.14.2",
+  "typescript": "4.7.4",
+  "vite": "^3.0.2",
+  "vite-plugin-eslint": "^1.7.0",
+  "vite-plugin-mkcert": "1.9.0",
+  "vite-tsconfig-paths": "3.5.0"
 }
 ```
-
-
 
 ## vite.config.ts
 
@@ -77,8 +79,6 @@ const defineConfig: UserConfigFn = ({ command, mode }) => {
 export default defineConfig;
 ```
 
-
-
 ## .eslintrc
 
 ```json
@@ -116,8 +116,6 @@ export default defineConfig;
 }
 ```
 
-
-
 ## .prettierrc
 
 ```json
@@ -150,4 +148,3 @@ export default defineConfig;
   }
 }
 ```
-
