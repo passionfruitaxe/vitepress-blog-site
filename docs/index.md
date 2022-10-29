@@ -3,8 +3,8 @@ title: Home
 layout: home
 hero:
   name: Luo Wei
-  text: 前端开发者                      UI只会复制粘贴
-  tagline: 欢迎来到我的博客兼知识库                                                         我会在这里分享我的日常
+  text: Web Developer                      UI Rookie
+  tagline: Welcome to my Blog & Knowledge Base
   image:
     src: /logo.jpg
     alt: avator
