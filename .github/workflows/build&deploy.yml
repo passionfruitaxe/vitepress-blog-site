@@ -32,5 +32,5 @@ jobs:
           user: ${{ secrets.USER_NAME }}
           pass: ${{ secrets.USER_PASS }}
           connect_timeout: 10s
-          local: "./dist"
-          remote: /var/www/blog-site"
+          local: "./docs/.vitepress/dist/*"
+          remote: /var/www/blog-site/dist"
