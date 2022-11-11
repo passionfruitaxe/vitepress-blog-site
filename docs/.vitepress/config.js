@@ -30,13 +30,23 @@ export default {
     // },
     nav: [
       { text: "首页", link: "/" },
-      { text: "博客", link: `${BLOG_PREFIX}/config` },
+      { text: "博客", link: `${BLOG_PREFIX}/浅尝Flutter.md` },
       { text: "LeetCode周赛题解", link: `${LEETCODE_PREFIX}/313-10-2` },
     ],
     sidebar: {
       "/guide/blog/": [
         {
           text: "博客",
+          collapsible: true,
+          items: [
+            {
+              text: "浅尝Flutter",
+              link: `${BLOG_PREFIX}/浅尝Flutter.md`,
+            },
+          ],
+        },
+        {
+          text: "知识库",
           collapsible: true,
           items: [{ text: "config", link: `${BLOG_PREFIX}/config` }],
         },
