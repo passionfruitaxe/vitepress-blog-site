@@ -1,4 +1,4 @@
-import { LOGO, GITHUB_URL, BLOG_PREFIX, LEETCODE_PREFIX } from "./global";
+import { LOGO, GITHUB_URL, BLOG_PREFIX } from "./global";
 
 export default {
   title: "Luowei's Blog",
@@ -31,7 +31,6 @@ export default {
     nav: [
       { text: "首页", link: "/" },
       { text: "博客", link: `${BLOG_PREFIX}/浅尝Flutter.md` },
-      { text: "LeetCode周赛题解", link: `${LEETCODE_PREFIX}/313-10-2` },
     ],
     sidebar: {
       "/guide/blog/": [
@@ -49,29 +48,6 @@ export default {
           text: "知识库",
           collapsible: true,
           items: [{ text: "config", link: `${BLOG_PREFIX}/config` }],
-        },
-      ],
-      "/leetcode/": [
-        {
-          text: "2022年10月",
-          items: [
-            {
-              text: "第313场(2022.10.2)",
-              link: `${LEETCODE_PREFIX}/313-10-2`,
-            },
-            {
-              text: "第314场(2022.10.9)",
-              link: `${LEETCODE_PREFIX}/314-10-9`,
-            },
-            {
-              text: "第315场(2022.10.16)",
-              link: `${LEETCODE_PREFIX}/315-10-16`,
-            },
-            {
-              text: "第316场(2022.10.23)",
-              link: `${LEETCODE_PREFIX}/316-10-23`,
-            },
-          ],
         },
       ],
     },
