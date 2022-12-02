@@ -3,11 +3,11 @@ title: Home
 layout: home
 hero:
   name: Luo Wei
-  text: Web Developer                      UI Rookie
+  text: Web Developer & React Fan & Student
   tagline: Welcome to my Blog & Knowledge Base
   image:
     src: /logo.jpg
-    alt: avator
+    alt: avatar
   actions:
     - theme: brand
       text: View Blog
