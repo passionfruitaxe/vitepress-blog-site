@@ -42,6 +42,10 @@ export default {
               text: "浅尝Flutter",
               link: `${BLOG_PREFIX}/浅尝Flutter.md`,
             },
+            {
+              text: "手撕题目",
+              link: `${BLOG_PREFIX}/手撕题目.md`,
+            },
           ],
         },
         {
