@@ -1,4 +1,4 @@
-import { LOGO, GITHUB_URL, BLOG_PREFIX } from "./global";
+import { LOGO, GITHUB_URL, BLOG_PREFIX, HAND_WRITE, RECODE } from "./global";
 
 export default {
   title: "Luowei's Blog",
@@ -31,6 +31,7 @@ export default {
     nav: [
       { text: "首页", link: "/" },
       { text: "博客", link: `${BLOG_PREFIX}/浅尝Flutter.md` },
+      { text: "面试", link: `${HAND_WRITE}/JS手撕题目.md` },
     ],
     sidebar: {
       "/guide/blog/": [
@@ -42,16 +43,41 @@ export default {
               text: "浅尝Flutter",
               link: `${BLOG_PREFIX}/浅尝Flutter.md`,
             },
+          ],
+        },
+      ],
+      "/guide/interview": [
+        {
+          text: "手写题目",
+          collapsible: true,
+          items: [
             {
-              text: "手撕题目",
-              link: `${BLOG_PREFIX}/手撕题目.md`,
+              text: "JS手撕题目",
+              link: `${HAND_WRITE}/JS手撕题目.md`,
+            },
+            {
+              text: "实现Promise类",
+              link: `${HAND_WRITE}/Promise类.md`,
+            },
+            {
+              text: "实现Promise并发调度",
+              link: `${HAND_WRITE}/Promise并发调度.md`,
+            },
+            {
+              text: "实现Promise请求重试",
+              link: `${HAND_WRITE}/Promise请求重试.md`,
             },
           ],
         },
         {
-          text: "知识库",
+          text: "面试记录",
           collapsible: true,
-          items: [{ text: "config", link: `${BLOG_PREFIX}/config` }],
+          items: [
+            {
+              text: "字节data部门前端实习生一面",
+              link: `${RECODE}/字节data部门前端实习生一面.md`,
+            },
+          ],
         },
       ],
     },
