@@ -74,7 +74,11 @@ export default {
           collapsible: true,
           items: [
             {
-              text: "字节data部门前端实习生一面",
+              text: "腾讯公众号&小程序团队实习一面",
+              link: `${RECODE}/腾讯公众号&小程序团队前端实习生一面.md`,
+            },
+            {
+              text: "字节data部门实习一面",
               link: `${RECODE}/字节data部门前端实习生一面.md`,
             },
           ],
