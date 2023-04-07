@@ -1,14 +1,8 @@
-# Promise并发调度
+# Promise 并发调度
 
 ```ts
-type Task = {
-  promiseCreator: () => Promise<unknown>;
-  resolve: (value: unknown) => void;
-  reject: (reason: unknown) => void;
-};
-
 function schedule(limit: number) {
- /*code here*/
+  /*code here*/
 }
 
 const request1 = () =>
@@ -58,8 +52,6 @@ addTask(request4).then((res) => {
  * 8s request4
  */
 ```
-
-
 
 ## 审题:
 
@@ -163,4 +155,3 @@ addTask(request4).then((res) => {
  * 8s request4
  */
 ```
-
