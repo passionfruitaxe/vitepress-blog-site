@@ -81,6 +81,10 @@ export default {
               text: "字节data部门实习一面",
               link: `${RECODE}/字节data部门前端实习生一面.md`,
             },
+            {
+              text: "站库前端实习生一面",
+              link: `${RECODE}/站库前端实习生一面.md`,
+            },
           ],
         },
       ],
