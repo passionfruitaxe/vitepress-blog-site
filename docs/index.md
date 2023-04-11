@@ -3,7 +3,7 @@ title: Home
 layout: home
 hero:
   name: Luo Wei
-  text: Web Developer & React Fan & Student
+  text: Web Developer & React Fan
   tagline: Welcome to my Blog & Knowledge Base
   image:
     src: /logo.jpg
