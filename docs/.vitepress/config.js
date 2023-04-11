@@ -60,8 +60,8 @@ export default {
               link: `${HAND_WRITE}/Promise类.md`,
             },
             {
-              text: "Axios请求拦截器",
-              link: `${HAND_WRITE}/Axios请求拦截器.md`,
+              text: "Axio响应拦截器",
+              link: `${HAND_WRITE}/Axios响应拦截器.md`,
             },
             {
               text: "实现Promise请求重试",
