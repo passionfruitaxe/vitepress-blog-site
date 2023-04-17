@@ -155,3 +155,21 @@ addTask(request4).then((res) => {
  * 8s request4
  */
 ```
+
+```ts
+/**更加优雅的写法*/
+function schedule(limit: number) {
+  const resolveQueue: ((value: unknown) => void)[] = [];
+  let alive = 0;
+  return async (promiseCreator: () => Promise<unknown>) => {
+    alive >= limit &&
+      (await new Promise((resolve) => resolveQueue.push(resolve)));
+    alive++;
+    const res = await promiseCreator();
+    alive--;
+    resolveQueue.length && resolveQueue.shift()!(res);
+    return res;
+  };
+}
+```
+
