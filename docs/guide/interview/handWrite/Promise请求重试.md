@@ -1,4 +1,6 @@
-# Promise请求重试
+# Promise 请求重试
+
+简单实现一下 retryRequest
 
 ```ts
 function retryRequestCreator(times: number) {
@@ -40,4 +42,3 @@ error Remaining 1 times
 success
 */
 ```
-

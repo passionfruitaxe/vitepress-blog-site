@@ -56,7 +56,7 @@ export default {
               link: `${HAND_WRITE}/JS手撕题目.md`,
             },
             {
-              text: "实现Promise类",
+              text: "Promise类",
               link: `${HAND_WRITE}/Promise类.md`,
             },
             {
@@ -64,12 +64,16 @@ export default {
               link: `${HAND_WRITE}/Axios响应拦截器.md`,
             },
             {
-              text: "实现Promise请求重试",
+              text: "Promise并发调度",
+              link: `${HAND_WRITE}/Promise并发调度.md`,
+            },
+            {
+              text: "Promise请求重试",
               link: `${HAND_WRITE}/Promise请求重试.md`,
             },
             {
-              text: "实现Promise请求重试",
-              link: `${HAND_WRITE}/Promise请求重试.md`,
+              text: "音乐播放器",
+              link: `${HAND_WRITE}/音乐播放器.md`,
             },
           ],
         },
