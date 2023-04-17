@@ -165,10 +165,14 @@ function schedule(limit: number) {
     alive >= limit &&
       (await new Promise((resolve) => resolveQueue.push(resolve)));
     alive++;
-    const res = await promiseCreator();
-    alive--;
-    resolveQueue.length && resolveQueue.shift()!(res);
-    return res;
+    try {
+      const res = await promiseCreator();
+      alive--;
+      resolveQueue.length && resolveQueue.shift()!(res);
+      return res;
+    } catch (error) {
+      return error;
+    }
   };
 }
 ```
