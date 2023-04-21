@@ -81,10 +81,10 @@ export default {
           text: "面试记录",
           collapsible: true,
           items: [
-            {
-              text: "面试模拟题",
-              link: `${RECODE}/面试模拟题.md`,
-            },
+            // {
+            //   text: "面试模拟题",
+            //   link: `${RECODE}/面试模拟题.md`,
+            // },
             {
               text: "腾讯公众号&小程序团队实习一面",
               link: `${RECODE}/腾讯公众号小程序团队前端实习生一面.md`,
