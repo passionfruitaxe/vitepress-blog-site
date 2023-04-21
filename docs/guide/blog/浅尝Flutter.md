@@ -1,8 +1,10 @@
 # 浅尝 Flutter
 
-## 背景讲解
+## 背景
 
-有幸尝试过构建跨端手机应用，我熟悉的技术框架为 React 系，而当时技术选型结果为：
+跨端框架哪家强？在前端开始对移动端“入侵”的阶段，React Native，Uni-app在逐渐称为跨端最佳实践，Google作为安卓头头决定亲自下台，通过一个Flutter框架+一个小众的Dart语言，掀翻所有竞争对手称为跨端框架的龙头。
+
+我恰好最近想写一个APP，由于人力资源不足，只能考虑跨端方案了，我们参考了市面上常见的方案：
 
 - `React Native`
 
@@ -10,18 +12,13 @@
 
 - `Flutter`
 
-`Flutter`大名早有耳闻，谷歌自己研发的跨端 APP 框架，想来应该是相当契合安卓系统的。但考虑到团队成员多数为前端开发者，最终选型技术为`Uni-app`，实际上`Uni-app`为我们解决了很多底层方面的问题，但是他所提供的功能却不能满足我们的需求，导致我们的开发在中途可能需要更换技术栈，由此我有些后悔没有选择`Flutter`。
+我们都是前端开发者，技术栈也主要是React，按理说可以直接选到`React Native`这类`React`系框架，`Uni-app`支持`Vue`而`Flutter`采用`Dart`。但是`Uni-app`目前属于开箱即用，配合`HBuilder`几乎可以不用考虑写代码之外的事，它自身提供了非常好的平台支持，于是最后还是选择了`Uni-app`，他基于`Vue`和`js`学习成本低，并且借用`Uni`的平台可以傻瓜式操作。反之`Dart`由于是一门全新的语言，学习成本过高是最大的问题。
 
-当时不选择`Flutter`和`React Native`的原因有以下几个：
-
-- `Flutter`是基于`Dart`语言的，要使用`Flutter`学习成本较高
-- `React Native`环境配置很麻烦，而且我们也想尝试一下`Vue3`构建
-
-于是我们选择了学习成更低的`Uni-app`来构建，结果已经提到过，开发过程被迫停滞，再考虑是否更换新的框架进行重构。
-
-这一次借助校内开设的《移动互联技术与实践》课程，让我能够重新接触 Flutter 这个热门框架，我想借此分享一下一个前端仔开始使用`Flutter`的心路历程。
+这一次借助校内开设的《移动互联技术与实践》课程，恰好有机会让我能够重新接触 `Flutter` 这个热门框架，我想借此分享一下一个前端仔开始使用`Flutter`的心路历程。
 
 ## 学习过程：
+
+Flutter环境配置就是第一道坎，只要坚持迈过这第一道坎，后面就会有更多的坎需要迈过去！
 
 配置`Android`环境
 
@@ -49,6 +46,8 @@ $ cd ./flutter
 $ flutter doctor
 ```
 
+IDE生成了个`Flutter`项目模板，我来看看他长啥样
+
 `Demo`：
 
 ```dart
@@ -60,13 +59,9 @@ return MaterialApp(
     home: const Scaffold(body: Login()));
 ```
 
-通过简单示例我了解了 Flutter 的组件编写风格
+这`Flutter`的组件咋一股子`Java`味儿啊，感觉跟用`JavaScript`写的`Java Swing`一样？
 
-天啊！这和我想象中的完全不一样
-
-`Flutter`的层级关系是通过父组件中的某个属性上绑定子组件实现的（如上所示）
-
-这对于一个前端仔来说完全是噩梦构图，布局样式完全依赖于框架封装的类包含的属性。
+组件间的的布局是通过，组件类传参来实现的，连样式都是预设好的参数，差点没直接给我劝退，之前被`Java Swing`折磨太惨了
 
 恶心我几天后重整心态，不过是嵌套结构，在我看来只要将组件拆分的足够细致，想来嵌套结构也能够有条不紊的清晰展示。
 
@@ -74,7 +69,7 @@ return MaterialApp(
 
 课程的实验指导书上需要使用`flutter-webview-plugin`库，这个包中调用了`Android`的`Webview`没有办法在`Web`端运行。于是我开始了真机调试之路。
 
-`Android Studio`对真机调试比较友好，`Flutter`也支持`Android`的最新版（`RN`只支持特定版本的`Android`），看起来应该是一帆风顺的调试才是我噩梦的开始。
+`Android Studio`对真机调试比较友好，`Flutter`也支持`Android`的最新版（`RN`只支持特定版本的`Android`）。
 
 第一个问题是：
 
@@ -115,41 +110,27 @@ class GlobalMessage {
         textColor: Colors.white,
         fontSize: 16.0);
   }
-
-  static void warning(String message, [ToastGravity? gravity]) {
-    message = message.length > 100 ? message.substring(0, 100) : message;
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: gravity ?? ToastGravity.TOP,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.orange[400],
-        textColor: Colors.white,
-        fontSize: 16.0);
-  }
-
-  static void info(String message, [ToastGravity? gravity]) {
-    message = message.length > 100 ? message.substring(0, 100) : message;
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: gravity ?? ToastGravity.TOP,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.blue[400],
-        textColor: Colors.white,
-        fontSize: 16.0);
-  }
 }
 ```
 
-封装`sqlite`数据库操作对我这个前端仔是有些陌生了，不过好在也通过请教后端同学规范代码风格（感谢实验室后端同学），特别是`Flutter`调用原生`API`的文档非常完善，只能说不愧是`Google`，兼容性这一块无可挑剔。
+越到后面越发现，我要把Web那一套搬过来也没啥问题啊
+
+| Flutter            | Web          |
+| ------------------ | ------------ |
+| shared_preferences | localStorage |
+| flutter-toast      | antd-message |
+| sqlite             | indexDB      |
+
+你再回头来看看，这俩开发起来好像也差不太多嘛
+
+
 
 ## 总结：
 
 `Flutter`在你不熟悉的阶段，假如你是一个前端开发者，可能完全无法接受这种风格的开发，我大概有好几天都处在一个非常烦躁的开发状态。
 
-之后稍微熟悉了`Flutter`并掌握了一些技巧后，问题好像就迎刃而解了，`FLutter`确实是一个非常成熟且完善的框架，一套 UI 同时能渲染到`Android`和`IOS`端，一人干俩人活，不失为`KPI`神器。所以非常建议有此想法的同学，如果在开始关头被卡住很难受，不妨再坚持坚持，守得云开见月明！
+之后稍微熟悉了`Flutter`并掌握了一些技巧后，问题好像也就没那么明显，`FLutter`确实是一个非常成熟且完善的跨端框架，一套 UI 同时能渲染到`Android`和`IOS`端，一人干俩人活，也是刷`KPI`的神器。非常建议有此想法的同学，如果在开始关头被卡住很难受，不妨再坚持坚持，守得云开见月明！
 
-如果你还在犹豫要不要入坑`Flutter`，我的建议是如果你想尝试跨端框架，那一定要尝试 Flutter，前端仔都没用`React`和`Vue`来学`Dart`，你还在等什么？
+如果你想尝试跨端框架，那一定要尝试`Flutter`，虽然可以在舒适圈中躺平选React Vue，但有时向前走一步，新的风景就会出现了
 
 [PassionFruitAXE/qq-flutter: 基于 Flutter 的仿 QQ APP (github.com)](https://github.com/PassionFruitAXE/qq-flutter)
