@@ -1,4 +1,11 @@
-import { LOGO, GITHUB_URL, BLOG_PREFIX, HAND_WRITE, RECODE } from "./global";
+import {
+  LOGO,
+  GITHUB_URL,
+  BLOG_PREFIX,
+  HAND_WRITE,
+  RECODE,
+  LEETCODE,
+} from "./global";
 
 export default {
   title: "Luowei's Blog",
@@ -48,13 +55,23 @@ export default {
       ],
       "/guide/interview": [
         {
-          text: "手写题目",
+          text: "算法和JS手写",
           collapsible: true,
           items: [
             {
-              text: "JS手撕题目",
-              link: `${HAND_WRITE}/JS手撕题目.md`,
+              text: "力扣题单",
+              link: `${LEETCODE}/力扣题单.md`,
             },
+            {
+              text: "JS手撕题目",
+              link: `${LEETCODE}/JS手撕题目.md`,
+            },
+          ],
+        },
+        {
+          text: "面试手写题目",
+          collapsible: true,
+          items: [
             {
               text: "Promise类",
               link: `${HAND_WRITE}/Promise类.md`,
