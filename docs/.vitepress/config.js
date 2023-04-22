@@ -55,16 +55,12 @@ export default {
       ],
       "/guide/interview": [
         {
-          text: "算法和JS手写",
+          text: "算法",
           collapsible: true,
           items: [
             {
               text: "力扣题单",
               link: `${LEETCODE}/力扣题单.md`,
-            },
-            {
-              text: "JS手撕题目",
-              link: `${LEETCODE}/JS手撕题目.md`,
             },
           ],
         },
@@ -72,6 +68,10 @@ export default {
           text: "面试手写题目",
           collapsible: true,
           items: [
+            {
+              text: "JS手撕题目",
+              link: `${HAND_WRITE}/JS手撕题目.md`,
+            },
             {
               text: "Promise类",
               link: `${HAND_WRITE}/Promise类.md`,
