@@ -50,6 +50,10 @@ export default {
               text: "浅尝Flutter",
               link: `${BLOG_PREFIX}/浅尝Flutter.md`,
             },
+            {
+              text: "《React设计原理》笔记",
+              link: `${BLOG_PREFIX}/《React设计原理》笔记.md`,
+            },
           ],
         },
       ],
