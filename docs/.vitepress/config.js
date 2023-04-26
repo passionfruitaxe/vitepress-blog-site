@@ -47,6 +47,10 @@ export default {
           collapsible: true,
           items: [
             {
+              text: "自我介绍",
+              link: `${BLOG_PREFIX}/自我介绍.md`,
+            },
+            {
               text: "浅尝Flutter",
               link: `${BLOG_PREFIX}/浅尝Flutter.md`,
             },
@@ -54,17 +58,25 @@ export default {
               text: "《React设计原理》笔记",
               link: `${BLOG_PREFIX}/《React设计原理》笔记.md`,
             },
+            {
+              text: "IEEE 754浮点数",
+              link: `${BLOG_PREFIX}/IEEE 754浮点数.md`,
+            },
           ],
         },
       ],
       "/guide/interview": [
         {
-          text: "算法",
+          text: "LeetCode",
           collapsible: true,
           items: [
             {
-              text: "力扣题单",
-              link: `${LEETCODE}/力扣题单.md`,
+              text: "力扣算法题单",
+              link: `${LEETCODE}/力扣算法题单.md`,
+            },
+            {
+              text: "力扣JS题解",
+              link: `${LEETCODE}/力扣JS题解.md`,
             },
           ],
         },

@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: View Blog
-      link: /guide/blog/浅尝Flutter
+      link: /guide/blog/自我介绍
     - theme: alt
       text: View on GitHub
       link: https://github.com/FrontEndMST/virepress-blog-site

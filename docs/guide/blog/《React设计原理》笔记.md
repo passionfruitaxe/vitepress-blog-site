@@ -1,6 +1,6 @@
 # 《React 设计原理》笔记
 
-本篇博客可能需要搭配`[卡颂]《React设计原理》电子工业出版社`观看，主要是梳理一下流程中的细节部分，不会大篇幅的谈书中内容
+本篇博客可能需要搭配`[卡颂]《React设计原理》电子工业出版社`观看，主要是梳理一下流程中的细节部分，不会大篇幅的谈书中内容，顺便记录一下思考过程
 
 React 总共分为三个板块：Reconciler、Renderer、Scheduler
 
@@ -9,6 +9,8 @@ Reconciler 工作阶段称为 render 阶段
 Renderer 工作阶段称为 commit 阶段
 
 Scheduler 工作阶段称为 schedule 阶段
+
+
 
 ## render 阶段
 
@@ -24,6 +26,8 @@ completeWork:
 
 为 fiberNode 生成对应的 DOM 对象，并初始化属性，形成完整的离层 DOM 树
 
+
+
 **update 时:**
 
 beginWork:
@@ -33,6 +37,8 @@ beginWork:
 completeWork:
 
 标记删除“更新前有，更新后无”的属性，标记更新“update 流程前后发生改变的属性”，并进行 flag 冒泡
+
+
 
 接下来我们随着一个样例讲一下细节：
 
@@ -77,6 +83,8 @@ mount 阶段执行流程如下：（update 阶段 beginWork 会判断能否复�
 > 4. 当遍历流程回到最初步骤 1 所在层或者 parent 所在层时中止
 
 ![1.1](/images\1.1.png)
+
+需要注意的是，fiberNode层级和DOM元素层级可能不相同，比如HostComponent和ClassComponent在fiberNode层级相同，而在DOM元素层级中显然不同
 
 我们还是以这个图举例，第一次执行的 completeWork 为"Hello" fiberNode completeWork，执行流程如下：
 
