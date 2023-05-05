@@ -37,8 +37,8 @@ export default {
     // },
     nav: [
       { text: "首页", link: "/" },
-      { text: "博客", link: `${BLOG_PREFIX}/浅尝Flutter.md` },
-      { text: "面试", link: `${HAND_WRITE}/JS手撕题目.md` },
+      { text: "博客", link: `${BLOG_PREFIX}/自我介绍.md` },
+      { text: "面试", link: `${LEETCODE}/力扣算法题单.md` },
     ],
     sidebar: {
       "/guide/blog/": [
@@ -51,16 +51,16 @@ export default {
               link: `${BLOG_PREFIX}/自我介绍.md`,
             },
             {
-              text: "浅尝Flutter",
-              link: `${BLOG_PREFIX}/浅尝Flutter.md`,
+              text: "跨端我为什么强推Flutter",
+              link: `${BLOG_PREFIX}/跨端我为什么强推Flutter.md`,
+            },
+            {
+              text: "一文说透0.1+0.2!==0.3",
+              link: `${BLOG_PREFIX}/一文说透0.1+0.2!==0.3.md`,
             },
             {
               text: "《React设计原理》笔记",
               link: `${BLOG_PREFIX}/《React设计原理》笔记.md`,
-            },
-            {
-              text: "IEEE 754浮点数",
-              link: `${BLOG_PREFIX}/IEEE 754浮点数.md`,
             },
           ],
         },
@@ -73,10 +73,6 @@ export default {
             {
               text: "力扣算法题单",
               link: `${LEETCODE}/力扣算法题单.md`,
-            },
-            {
-              text: "力扣JS题解",
-              link: `${LEETCODE}/力扣JS题解.md`,
             },
           ],
         },

@@ -1,8 +1,8 @@
 # 《React 设计原理》笔记
 
-本篇博客可能需要搭配`[卡颂]《React设计原理》电子工业出版社`观看，主要是梳理一下流程中的细节部分，不会大篇幅的谈书中内容，顺便记录一下思考过程
+近期着手阅读`[卡颂]《React设计原理》电子工业出版社`，写下本章的目的主要是梳理一下流程中的细节部分，顺便记录一下思考过程
 
-React 总共分为三个板块：Reconciler、Renderer、Scheduler
+React 的重要组成部分主要为：Reconciler、Renderer、Scheduler
 
 Reconciler 工作阶段称为 render 阶段
 
@@ -24,7 +24,7 @@ beginWork:
 
 completeWork:
 
-为 fiberNode 生成对应的 DOM 对象，并初始化属性，形成完整的离层 DOM 树
+为 fiberNode 生成对应的 DOM 对象，并初始化属性，直到形成完整的离层 DOM 树
 
 
 
@@ -32,11 +32,11 @@ completeWork:
 
 beginWork:
 
-判断节点能否进行复用，如果不能复用则进行调和，为生成的子 fiberNode 标记副作用 flags
+判断节点能否进行复用，如果不能复用则进行调和(reconcile)，为生成的子 fiberNode 标记副作用 flags
 
 completeWork:
 
-标记删除“更新前有，更新后无”的属性，标记更新“update 流程前后发生改变的属性”，并进行 flag 冒泡
+标记删除“更新前有，更新后无”的属性，标记更新“update 流程前后发生改变的属性”，进行 flag 冒泡
 
 
 
@@ -56,7 +56,7 @@ completeWork:
 
 fiberNode 的创建是以深度优先算法创建的，在递归的递阶段执行 beginWork，归阶段执行 completeWork
 
-已知存在全局变量**workInProgress**表示正在处理的 fiberNode[初始值为 HostRootFiber]，简称**wip**
+> 已知存在全局变量**workInProgress**表示正在处理的 fiberNode[初始值为 HostRootFiber]，简称**wip**
 
 mount 阶段执行流程如下：（update 阶段 beginWork 会判断能否复用原来的 fiberNode）
 
@@ -81,10 +81,10 @@ mount 阶段执行流程如下：（update 阶段 beginWork 会判断能否复�
 > 2. 对兄弟 fiberNode 执行步骤 1
 > 3. 如果没有兄弟 fiberNode，则对父 fiberNode 的兄弟执行步骤 1
 > 4. 当遍历流程回到最初步骤 1 所在层或者 parent 所在层时中止
+>
+> 需要注意的是，fiberNode层级和DOM元素层级可能不相同
 
 ![1.1](/images\1.1.png)
-
-需要注意的是，fiberNode层级和DOM元素层级可能不相同，比如HostComponent和ClassComponent在fiberNode层级相同，而在DOM元素层级中显然不同
 
 我们还是以这个图举例，第一次执行的 completeWork 为"Hello" fiberNode completeWork，执行流程如下：
 
@@ -94,7 +94,7 @@ mount 阶段执行流程如下：（update 阶段 beginWork 会判断能否复�
 4. div fiberNode 执行 completeWork，创建 div fiberNode 对应的 DOM 元素，将"Hello"和 span 插入 div fiberNode 对应的 DOM 元素中。设置 div DOM Element 属性
 5. App fiberNode 同理
 
-执行结束后形成了一颗离层 DOM 树
+执行结束后形成了一颗完整离层 DOM 树
 
 flag 冒泡是因为 Renderer 需要对“被标记的 fiberNode 对应的 DOM 元素”执行“flags 对应的 DOM 操作”，所以经由如下操作可将 flag 冒泡一层：
 
@@ -110,4 +110,12 @@ completeWork 的 update 阶段稍有不同，他会进行两次遍历：
 1. 第一次遍历，标记删除“更新前有，更新后无”的属性
 2. 第二次遍历，标记更新“update 流程前后发生改变”的属性
 
-所有的变化都会保存到 fiberNode.updaeQueue 中并且该 fiberNode 会标记 Update
+所有的变化都会保存到 fiberNode.updateQueue 中并且该 fiberNode 会标记 Update的flag
+
+
+
+## commit阶段
+
+
+
+## schedule阶段
