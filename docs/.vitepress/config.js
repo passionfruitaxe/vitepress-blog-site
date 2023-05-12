@@ -51,12 +51,16 @@ export default {
               link: `${BLOG_PREFIX}/自我介绍.md`,
             },
             {
-              text: "跨端我为什么强推Flutter",
-              link: `${BLOG_PREFIX}/跨端我为什么强推Flutter.md`,
+              text: "跨端框架强烈推荐Flutter",
+              link: `${BLOG_PREFIX}/跨端框架强烈推荐Flutter.md`,
             },
             {
               text: "一文说透0.1+0.2!==0.3",
               link: `${BLOG_PREFIX}/一文说透0.1+0.2!==0.3.md`,
+            },
+            {
+              text: "从0搭建一个命令行CLI工具",
+              link: `${BLOG_PREFIX}/从0搭建一个命令行CLI工具.md`,
             },
             {
               text: "《React设计原理》笔记",

@@ -52,7 +52,7 @@ completeWork:
 </App>
 ```
 
-![1.1](/images\1.1.png)
+![1.1](/images/1.1.png)
 
 fiberNode 的创建是以深度优先算法创建的，在递归的递阶段执行 beginWork，归阶段执行 completeWork
 
@@ -116,6 +116,10 @@ completeWork 的 update 阶段稍有不同，他会进行两次遍历：
 
 ## commit阶段
 
+正在写作中~~~
+
 
 
 ## schedule阶段
+
+正在写作中~~~
