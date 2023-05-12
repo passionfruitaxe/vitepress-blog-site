@@ -55,8 +55,8 @@ export default {
               link: `${BLOG_PREFIX}/跨端框架强烈推荐Flutter.md`,
             },
             {
-              text: "一文说透0.1+0.2!==0.3",
-              link: `${BLOG_PREFIX}/一文说透0.1+0.2!==0.3.md`,
+              text: "JavaScript中的浮点数",
+              link: `${BLOG_PREFIX}/JavaScript中的浮点数.md`,
             },
             {
               text: "从0搭建一个命令行CLI工具",
