@@ -51,8 +51,8 @@ export default {
               link: `${BLOG_PREFIX}/自我介绍.md`,
             },
             {
-              text: "跨端框架强烈推荐Flutter",
-              link: `${BLOG_PREFIX}/跨端框架强烈推荐Flutter.md`,
+              text: "为什么选择Flutter来做跨端",
+              link: `${BLOG_PREFIX}/为什么选择Flutter来做跨端.md`,
             },
             {
               text: "JavaScript中的浮点数",
