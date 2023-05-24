@@ -167,7 +167,9 @@ class MyPromise {
 
 ## Callback数组的作用
 
-为什么会存在成功和失败的两个回调？直接在`.then`方法中判断状态返回`this.promiseResult`不行吗？
+为什么会存在成功和失败的两个回调数组？
+
+直接在`.then`方法中判断状态返回`this.promiseResult`好像也是可行的？
 
 ```ts
 class MyPromise {
@@ -176,7 +178,7 @@ class MyPromise {
 }
 ```
 
-我们先思考一下，promise状态改变和`.then`方法执行的先后关系，有以下两种：
+我们先思考一下，`promise`状态改变和`.then`方法执行的先后关系，有以下两种：
 
 - 先改变状态，再执行`.then`方法
 - 先执行`.then`方法，再改变状态
@@ -190,11 +192,31 @@ const p = new MyPromise((resolve, reject) => {
 p.then(console.log, console.error);
 ```
 
-根据Event loop和浏览器处理任务的顺序，setTimeout（宏任务）会在下一个Tick被执行，也就是说这个promise先执行了`.then`方法，再执行状态改变函数`resolve(1)`
+根据`Event loop`和浏览器处理任务的顺序
 
-当你执行`.then`方法时，promise状态还未被改变，如果你在`.then`方法中直接判断状态，此时的状态为`PENDING`
+`setTimeout`（宏任务）会在下一个Tick被执行
 
-所以我们可以得出一个结论：`.then`方法的回调函数应该在promise状态被改变时调用，也就是在`resolve/reject`函数中。这就是我们设计Callback数组的作用，将`onFulfilledCallback`和`onRejectedCallback`保存起来，在状态改变时依次执行对应状态的回调数组，这样即使是异步改变状态也能够正常使用——（Promise不本来就可以用来处理异步代码的吗）
+也就是说这个`promise`先执行了`.then`方法，再执行状态改变函数`resolve(1)`
+
+当你执行`.then`方法时，`promise`状态还未被改变，此时的状态为`PENDING`
+
+所以我们可以得出一个结论：
+
+**`.then`方法的回调函数应该在`promise`状态被改变时调用也就是在`resolve/reject`函数中。**
+
+这就是我们设计`Callback`数组的作用，将`.then`方法中传入的`onFulfilledCallback`和`onRejectedCallback`保存起来，在状态改变时依次执行对应状态的回调数组
+
+至于为什么是数组？
+
+```ts
+const p = new Promise(resolve=>{
+	setTimeout(resolve, 1000, 1);
+})
+p.then(console.log);
+p.then(console.error);
+```
+
+`promise`本来就可以多次执行`.then`方法
 
 其实这一点在Promise A+规范中早就给出了
 
@@ -227,7 +249,7 @@ p.then(console.log, console.error);
 
 ## `.then`方法的链式调用
 
-在整个Promise类中最为核心的莫过于`.then`方法了，`.then`方法会返回一个promise
+在整个`Promise`类中最为核心的莫过于`.then`方法了，`.then`方法会返回一个`promise`
 
 ![promiseThen](/then.png)
 
@@ -246,7 +268,9 @@ p.then(console.log, console.error);
 
 
 
-第一步直接自信返回一个MyPromise，这里我们约定初始的promise为**originPromise**，then返回的promise为**thenPromise**
+第一步直接自信返回一个`promise`
+
+>  这里我们约定初始的promise为**originPromise**，then返回的promise为**thenPromise**
 
 ```ts
 then(onFulFilled?: (value: any) => any, onRejected?: (reason: any) => any) {
@@ -267,10 +291,10 @@ then(onFulFilled?: (value: any) => any, onRejected?: (reason: any) => any) {
 
 对于三种情况的逻辑如下：
 
-- 如果此时状态已经改变，直接执行对应的回调函数
-- 如果状态为`PENDING`，将`onFulFilled`和`onRejected`放入`onFulFilledCallback`和`onRejectedCallback`数组
+- 如果此时状态已经改变（成功或失败），直接执行对应的回调函数
+- 如果状态为`PENDING`，将`onFulFilled`和`onRejected`放入对应回调数组
 
-`callback`的执行是必然的，我们需要着重考虑链式调用时`.then`方法返回一个新的promise，这个promise将决定`thenPromise`的状态
+状态改变时对应的`callback`的执行是必然的，我们需要着重考虑链式调用时`.then`方法返回一个新的`promise`，这个`promise`将决定`thenPromise`的状态
 
 > 《Promise A+规范》
 >
@@ -327,7 +351,9 @@ try {
 }
 ```
 
-有个实验室学弟说他理解的then方法中有一个递归，总所周知递归需要有一个结束条件，否则就是无线递归。这里如果返回的是自身的话，就会是无限递归
+这里讲一个插曲，有一个实验室学弟理解then方法中是一个递归调用，我也纳闷哪来的递归呢？后来仔细想的话还真有递归。
+
+总所周知递归需要有一个结束条件，否则就是无线递归。这里如果返回的`promise`是自身的话，就会是无限递归
 
 简单把这段代码写成一个函数
 
@@ -365,7 +391,7 @@ if (this.promiseStatus === Status.RESOLVED) {
 }
 ```
 
-这样一个简单的promise链式调用就完成了
+这样一个简单的`promise`链式调用就完成了
 
 
 
@@ -400,11 +426,13 @@ then(onFulFilled?: (value: any) => any, onRejected?: (reason: any) => any) {
 
 
 
-但传入的非函数时，会被赋值为一个默认的函数。
+但传入的非函数时，会将其赋值为一个默认的函数。
 
-`onFulfilled`较好理解，promise如果没有抛错或者返回一个Rejected状态的promise则会返回一个fulfilled状态的promise，在这里`thenPromise`的promiseResult就为value
+`onFulfilled`较好理解，`promise`如果没有抛错或者返回一个被拒绝的`promise`时会返回一个成功的`promise`，并且`promiseResult`值为`value`
 
-`onRejected`为啥要抛错呀？我们仔细观察一下这个`onRejected`的抛错会在哪里被捕获
+**`onRejected`为什么要抛错呢？**
+
+我们仔细观察一下这个`onRejected`的抛错会在哪里被捕获
 
 ```ts
 constructor(
@@ -465,7 +493,15 @@ if (this.promiseStatus === Status.RESOLVED) {
 }
 ```
 
-从这里可以看到onRejected函数会在resolvePromise中被捕获，对`thenPromise`执行`reject(e)`，再抛出错误，被`originPromise`的`constructor`捕获，对`originPromise`执行`reject(e)`，所以当前Promise的拒绝理由会被传给`thenPromise`作为`thenPromise`的拒绝理由，这也与《Promise A+》规范相符
+从这段代码中看到：
+
+1. `onRejected`函数会在`resolvePromise`中被捕获
+
+2. 对`thenPromise`执行`reject(e)`，再抛出错误
+
+3. 被`originPromise`的`constructor`捕获，对`originPromise`执行`reject(e)`
+
+所以当前Promise的拒绝理由会被传给`thenPromise`作为`thenPromise`的拒绝理由，这也与《Promise A+》规范相符
 
 这样做有什么好处呢？我们可以构建一个场景
 
@@ -536,6 +572,8 @@ try{
 }
 ```
 
-很显然写法3是最简介且清晰明了的，这里的promise错误捕获同理，我们希望可以用一个`.catch`捕获链式调用中第一个拒绝理由，这就是promise的错误穿透或者叫异常穿透
+很显然写法3是最好的实现调用方式
+
+这里的`promise`错误捕获同理，我们希望可以用一个`.catch`捕获链式调用中第一个拒绝理由，这就是`promise`的错误穿透或者叫异常穿透
 
 最后，希望本章解析能够增强你对promise的理解！
