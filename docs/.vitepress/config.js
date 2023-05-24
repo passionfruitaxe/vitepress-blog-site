@@ -85,8 +85,8 @@ export default {
           collapsible: true,
           items: [
             {
-              text: "JS手撕题目",
-              link: `${HAND_WRITE}/JS手撕题目.md`,
+              text: "手撕题目",
+              link: `${HAND_WRITE}/手撕题目.md`,
             },
             {
               text: "Promise类",
