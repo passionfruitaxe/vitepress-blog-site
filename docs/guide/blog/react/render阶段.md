@@ -1,20 +1,13 @@
-# 《React 设计原理》笔记
+# render阶段
 
-近期着手阅读`[卡颂]《React设计原理》电子工业出版社`，写下本章的目的主要是梳理一下流程中的细节部分，顺便记录一下思考过程
+主要分为两个部分
 
-React 的重要组成部分主要为：Reconciler、Renderer、Scheduler
+- beginWork 
+- completeWork
 
-Reconciler 工作阶段称为 render 阶段
+在 render 阶段中我们要根据此时组件是首次挂载还是更新做出不同的应对策略
 
-Renderer 工作阶段称为 commit 阶段
-
-Scheduler 工作阶段称为 schedule 阶段
-
-
-
-## render 阶段
-
-主要分为两个部分，beginWork 和 completeWork，在 render 阶段中我们要根据此时组件是首次挂载还是更新做出不同的应对策略
+<br/>
 
 **mount 时:**
 
@@ -26,7 +19,7 @@ completeWork:
 
 为 fiberNode 生成对应的 DOM 对象，并初始化属性，直到形成完整的离层 DOM 树
 
-
+<br/>
 
 **update 时:**
 
@@ -38,7 +31,7 @@ completeWork:
 
 标记删除“更新前有，更新后无”的属性，标记更新“update 流程前后发生改变的属性”，进行 flag 冒泡
 
-
+<br/>
 
 接下来我们随着一个样例讲一下细节：
 
@@ -53,6 +46,8 @@ completeWork:
 ```
 
 ![1.1](/images/1.1.png)
+
+<br/>
 
 fiberNode 的创建是以深度优先算法创建的，在递归的递阶段执行 beginWork，归阶段执行 completeWork
 
@@ -71,6 +66,8 @@ mount 阶段执行流程如下：（update 阶段 beginWork 会判断能否复�
 9. App fiberNode completeWork
 10. HostRootFiber completeWork
 
+<br/>
+
 这里给出一段书上定义：
 
 > （P92-93）
@@ -82,9 +79,11 @@ mount 阶段执行流程如下：（update 阶段 beginWork 会判断能否复�
 > 3. 如果没有兄弟 fiberNode，则对父 fiberNode 的兄弟执行步骤 1
 > 4. 当遍历流程回到最初步骤 1 所在层或者 parent 所在层时中止
 >
-> 需要注意的是，fiberNode层级和DOM元素层级可能不相同
+> 需要注意的是，fiberNode 层级和 DOM 元素层级可能不相同
 
 ![1.1](/images\1.1.png)
+
+<br/>
 
 我们还是以这个图举例，第一次执行的 completeWork 为"Hello" fiberNode completeWork，执行流程如下：
 
@@ -105,21 +104,11 @@ subtreeFlags |= child.flags;
 completedWork.subtreFlags |= subtreeFlags;
 ```
 
+<br/>
+
 completeWork 的 update 阶段稍有不同，他会进行两次遍历：
 
 1. 第一次遍历，标记删除“更新前有，更新后无”的属性
 2. 第二次遍历，标记更新“update 流程前后发生改变”的属性
 
-所有的变化都会保存到 fiberNode.updateQueue 中并且该 fiberNode 会标记 Update的flag
-
-
-
-## commit阶段
-
-正在写作中~~~
-
-
-
-## schedule阶段
-
-正在写作中~~~
+所有的变化都会保存到 fiberNode.updateQueue 中并且该 fiberNode 会标记 Update 的 flag

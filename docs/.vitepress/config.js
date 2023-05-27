@@ -5,6 +5,8 @@ import {
   HAND_WRITE,
   RECODE,
   LEETCODE,
+  REACT_PREFIX,
+  TYPESCRIPT_PREFIX,
 } from "./global";
 
 export default {
@@ -51,8 +53,8 @@ export default {
               link: `${BLOG_PREFIX}/自我介绍.md`,
             },
             {
-              text: "为什么选择Flutter来做跨端",
-              link: `${BLOG_PREFIX}/为什么选择Flutter来做跨端.md`,
+              text: "前端开发者的Flutter体验",
+              link: `${BLOG_PREFIX}/前端开发者的Flutter体验.md`,
             },
             {
               text: "JavaScript中的浮点数",
@@ -63,8 +65,40 @@ export default {
               link: `${BLOG_PREFIX}/从0搭建一个命令行CLI工具.md`,
             },
             {
-              text: "《React设计原理》笔记",
-              link: `${BLOG_PREFIX}/《React设计原理》笔记.md`,
+              text: "异步传染",
+              link: `${BLOG_PREFIX}/异步传染.md`,
+            },
+          ],
+        },
+        {
+          text: "React设计原理笔记",
+          collapsible: true,
+          items: [
+            {
+              text: "前言",
+              link: `${REACT_PREFIX}/前言.md`,
+            },
+            {
+              text: "render阶段",
+              link: `${REACT_PREFIX}/render阶段.md`,
+            },
+            {
+              text: "commit阶段",
+              link: `${REACT_PREFIX}/commit阶段.md`,
+            },
+            {
+              text: "schedule阶段",
+              link: `${REACT_PREFIX}/schedule阶段.md`,
+            },
+          ],
+        },
+        {
+          text: "TypeScript类型体操",
+          collapsible: true,
+          items: [
+            {
+              text: "TS类型的奇妙冒险(一)",
+              link: `${TYPESCRIPT_PREFIX}/TS类型的奇妙冒险(一).md`,
             },
           ],
         },
@@ -114,10 +148,6 @@ export default {
           text: "面试记录",
           collapsible: true,
           items: [
-            // {
-            //   text: "面试模拟题",
-            //   link: `${RECODE}/面试模拟题.md`,
-            // },
             {
               text: "腾讯公众号&小程序团队实习一面",
               link: `${RECODE}/腾讯公众号小程序团队前端实习生一面.md`,
