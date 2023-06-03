@@ -339,7 +339,7 @@ async function action(){
 }
 ```
 
-上方代码在`Project`对象中传入项目的所有参数，并且执行`prject.run()`方法
+上方代码在`Project`对象中传入项目的所有参数，并且执行`project.run()`方法
 
 所以`Project`类的实现是整个脚手架中的核心
 
@@ -366,7 +366,7 @@ async function useCommand(command: string, cwd: string) {
   });
 }
 
-private async packageInstall(): Promise<void> {
+async function packageInstall(): Promise<void> {
     console.log(chalk.cyan("安装依赖中~~~"));
 	// Project类实例化时传递了packageManager和rootPath
     await useCommand(
@@ -467,7 +467,7 @@ export function createPackageJsonModule(config: TConfig) {
 
 #### 问题3：
 
-有一些依赖可能需要执行一些命令
+有一些依赖可能需要执行一些特别的操作
 
 比如`vite`这类可能需要在`package.json`中添加一些`script`，并且在`Project`类实例中是维护了一个`package.json`配置对象的，最好是在生成`package.json`文件前对属性进行修改
 
