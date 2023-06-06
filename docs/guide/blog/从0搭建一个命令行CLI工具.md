@@ -402,7 +402,7 @@ async function packageInstall(): Promise<void> {
 
 解决方法：
 
-其实也没太好的方法，为每种组合单独实现一个类，利用面向对象方法的继承实现，再搭配工厂模式和策略模式
+其实也没太好的方法，为每种组合单独实现一个类，利用面向对象方法的继承+堕胎实现，再辅以工厂模式+策略模式
 
 实际上我**几乎所有模块**都这么做的，我暂时寄希望于不会有太多”交叉“的依赖配置文件
 
@@ -471,7 +471,7 @@ export function createPackageJsonModule(config: TConfig) {
 
 比如`vite`这类可能需要在`package.json`中添加一些`script`，并且在`Project`类实例中是维护了一个`package.json`配置对象的，最好是在生成`package.json`文件前对属性进行修改
 
-又比如`prettier`绑定`git hook`，需要在项目生成结束后执行
+又比如`prettier`绑定`Git hook`，需要在项目生成结束后执行
 
 解决方法：
 
@@ -492,7 +492,7 @@ export type TDependence = {
 
 修改`package.json`中`script`字段通常在`beforeInitCallback`执行
 
-绑定`git hook`通常在`afterInitCallback`执行
+绑定`Git hook`通常在`afterInitCallback`执行
 
 示例如下：（打包工具是一个特殊的`package`）
 
