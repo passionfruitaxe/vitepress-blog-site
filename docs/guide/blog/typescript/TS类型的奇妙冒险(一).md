@@ -101,6 +101,26 @@ getValues(arr);
 
 <br/>
 
+其实到这里我们逆向思维会更简单
+
+对于一个类型，我们想要获取其中一些属性
+
+```ts
+type obj = {
+  a: number;
+  b: string;
+};
+
+type TPick<Obj, Union extends keyof Obj> = {
+  [Key in Union]: Obj[Key];
+};
+
+type ans = TPick<obj, "a">;
+// ans = { a:number }
+```
+
+这里的Union可以传一个联合类型
+
 接下里我们利用`TypeScript`内置的高阶类型让他变得更容易理解一些
 
 ```ts
@@ -114,6 +134,12 @@ function getValues<Keys extends keyof TObj>(arr: Keys[]): Pick<TObj, Keys> {
 
 getValues(["first", "second"]);
 ```
+
+
+
+## 总结：
+
+一开始钻入了误区，从结果上进行逆推很难理解，有时候需要转换思考方向
 
 
 
