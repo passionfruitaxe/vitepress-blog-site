@@ -92,16 +92,6 @@ export default {
             },
           ],
         },
-        {
-          text: "TypeScript类型体操",
-          collapsible: true,
-          items: [
-            {
-              text: "TS类型的奇妙冒险(一)",
-              link: `${TYPESCRIPT_PREFIX}/TS类型的奇妙冒险(一).md`,
-            },
-          ],
-        },
       ],
       "/guide/interview": [
         {
