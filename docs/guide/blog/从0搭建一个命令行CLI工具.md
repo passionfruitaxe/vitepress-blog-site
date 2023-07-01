@@ -2,7 +2,9 @@
 
 ## 背景
 
-我想很多前端初学者都面临过一个问题，每次项目都使用类似`create-react-app`这类工具，然后还要再根据自己的需求进行增加。比如我会更加青睐于`Vite`，所以我更希望默认打包工具是`Vite`而不是`Webpack`，当我想要去自己做一个`cli`时却发现无从下手，本篇文章就记录一下我做的一个`cli`过程
+大多数人应该都面临过一个问题，每次项目都使用类似`create-react-app`这类工具，然后还要再根据自己的需求进行配置，添加各种依赖包。
+
+又比如我会更加青睐于`Vite`，所以我更希望默认打包工具是`Vite`而不是`Webpack`，`Vite`官方提供的脚手架会有和上面一样的问题，当我想要去自己做一个`cli`时却发现无从下手，本篇文章就记录一下我做的一个交互式命令行`cli`过程
 
 本文实现了一个基于`Node.js`的命令行CLI工具
 
@@ -14,7 +16,9 @@
 
 ……
 
-这里就不一一介绍了
+这里就不一一介绍了，感兴趣可以自行了解
+
+> degit应该是最简单的方案了，他的问题是需要手动执行命令，而我的需求是一条命令生成可以运行的项目
 
 
 
@@ -54,7 +58,7 @@
 
 #### 主要流程：
 
-我们先预先想好通常情况下的脚手架流程
+我们先预先制定好脚手架的流程
 
 大致如下：
 
@@ -71,9 +75,13 @@
 
 #### 自动化流程：
 
+> 工欲善其事，必先利其器
+
 对于一个脚手架，我会希望他能够发布到`npm`上
 
 更理想的是我本地推到GitHub仓库后自动发布，这里我选择了`Github Action`
+
+配置文件如下：
 
 ```yaml
 # release.yml
@@ -140,7 +148,7 @@ jobs:
 
 ## 初始化项目
 
-这个项目我打算采用`Node.js+TypeScript+ESM`，因为是`ESM`所以会有一些不同
+这个`cli`项目我打算采用`Node.js+TypeScript+ESM`，因为是`ESM`所以会有一些不同
 
 接下来给出核心配置文件，会包含一些核心注释
 
@@ -307,7 +315,7 @@ async function action(){
 
 `Inquirer.js`简单来说就是通过命令行交互选择的`choices`值赋值给对应的`name`属性，例如在获取默认依赖包中赋值给了`deps`属性
 
->  这个`choices`可以是任何类型（包括引用类型）
+>  这个`choices`可以是任何类型
 
 这里采用了一个工厂函数的原因也很简单，根据不同的模板返回不同的依赖包列表，并且这里先按下依赖包`choices`类型不表
 
@@ -356,9 +364,10 @@ async function action(){
 
 其实到这儿为止一个简单的脚手架雏形已经构建完毕了，后面利用`fs`模块生成文件即可，方案也并非唯一
 
-最后安装依赖即可
+最后安装依赖即可，`execa`基本使用如下：
 
 ```ts
+// utils/command.ts
 async function useCommand(command: string, cwd: string) {
   await execa(`${command}`, [], {
     cwd,
@@ -366,6 +375,7 @@ async function useCommand(command: string, cwd: string) {
   });
 }
 
+// packageModule.ts
 async function packageInstall(): Promise<void> {
     console.log(chalk.cyan("安装依赖中~~~"));
 	// Project类实例化时传递了packageManager和rootPath
@@ -377,7 +387,7 @@ async function packageInstall(): Promise<void> {
 }
 ```
 
-如果你有兴趣可以去[PassionFruitAXE/create-spr-app](https://github.com/PassionFruitAXE/create-spr-app)查看具体源代码，目前这个项目还有很多缺陷，这里我就不大篇幅的讲设计过程了，接下来主要讲几个问题和解决方案
+如果你有兴趣可以去[PassionFruitAXE/create-spr-app](https://github.com/PassionFruitAXE/create-spr-app)查看具体源代码，目前这个项目还有很多缺陷，这里我就不讲源码设计过程了，接下来主要讲几个遇到的问题
 
 
 
@@ -391,7 +401,7 @@ async function packageInstall(): Promise<void> {
 
 解决方法：
 
-1. 直接全换`CJS`，降低一些依赖版本
+1. 直接全换`CJS`，降低部分依赖版本
 2. `package.json`设置`type: module`、`tsconfig`设置`module: NodeNext`、更新依赖为最新版本，目前核心的三个库都有`ESM`版本
 
 <br>
@@ -402,7 +412,7 @@ async function packageInstall(): Promise<void> {
 
 解决方法：
 
-其实也没太好的方法，为每种组合单独实现一个类，利用面向对象方法的继承+堕胎实现，再辅以工厂模式+策略模式
+其实也没太好的方法，为每种组合单独实现一个类，利用面向对象方法的继承+多态实现，再辅以工厂模式+策略模式
 
 实际上我**几乎所有模块**都这么做的，我暂时寄希望于不会有太多”交叉“的依赖配置文件
 
@@ -469,7 +479,7 @@ export function createPackageJsonModule(config: TConfig) {
 
 有一些依赖可能需要执行一些特别的操作
 
-比如`vite`这类可能需要在`package.json`中添加一些`script`，并且在`Project`类实例中是维护了一个`package.json`配置对象的，最好是在生成`package.json`文件前对属性进行修改
+比如`vite`这类可能需要在`package.json`中添加一些`script`，并且在`Project`类实例中是维护了一个`package.json`配置对象的，我并不希望生成配置文件后在对他进行修改，最好是在生成`package.json`文件前对属性进行修改
 
 又比如`prettier`绑定`Git hook`，需要在项目生成结束后执行
 
@@ -530,6 +540,8 @@ class ViteBuilderForReact extends ViteBuilder {
 }
 ```
 
+其实我们可以做的更好，比如借鉴vite，webpack这类库暴露一系列生命周期函数，这些就是后话了
+
 <br>
 
 #### 问题4：
@@ -540,5 +552,5 @@ class ViteBuilderForReact extends ViteBuilder {
 
 这个目前为止我也没想到什么好办法，因为要考虑的太多了
 
-依赖之间的版本依赖，不同的版本还会有一些API废弃等，所以目前还是人工维护依赖= =
+依赖之间的版本依赖，不同的版本还会有一些API废弃等，所以目前还是人工维护依赖，希望之后能找到更好的方法
 
