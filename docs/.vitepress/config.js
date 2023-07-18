@@ -133,8 +133,8 @@ export default {
               link: `${HAND_WRITE}/音乐播放器.md`,
             },
             {
-              text: "async&await自动执行器",
-              link: `${HAND_WRITE}/async&await自动执行器.md`,
+              text: "async_await自动执行器.md",
+              link: `${HAND_WRITE}/async_await自动执行器.md`,
             },
           ],
         },
