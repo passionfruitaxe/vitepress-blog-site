@@ -133,7 +133,7 @@ export default {
               link: `${HAND_WRITE}/音乐播放器.md`,
             },
             {
-              text: "async_await自动执行器.md",
+              text: "async_await自动执行器",
               link: `${HAND_WRITE}/async_await自动执行器.md`,
             },
           ],
@@ -161,6 +161,10 @@ export default {
             {
               text: "小米前端实习生一面",
               link: `${RECODE}/小米前端实习生一面.md`,
+            },
+            {
+              text: "小米前端实习生二面",
+              link: `${RECODE}/小米前端实习生二面.md`,
             },
           ],
         },
