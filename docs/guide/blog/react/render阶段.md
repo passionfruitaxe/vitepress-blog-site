@@ -1,39 +1,100 @@
 # render阶段
 
+`Reconciler` 工作阶段称为 `render` 阶段，本身是一个"DFS递归“的过程
+
 主要分为两个部分
 
-- beginWork 
-- completeWork
+- `beginWork `
 
-在 render 阶段中我们要根据此时组件是首次挂载还是更新做出不同的应对策略
+  `beginWork`过程又称为`render`阶段的"递"过程
 
-<br/>
+  主要任务是：
 
-**mount 时:**
+  - 挂载`fiberNode`到`wip.child`上，在某些情况下也会为`fiberNode`标记`flag`
 
-beginWork:
+- `completeWork`
 
-创建子 fiberNode，并将已创建的 fiberNode 连接成 fiberTree
+  `completeWork`过程又称为`render`阶段的"归"过程
 
-completeWork:
+  主要任务是：
 
-为 fiberNode 生成对应的 DOM 对象，并初始化属性，直到形成完整的离层 DOM 树
+  - 创建或标记元素更新
 
-<br/>
+  - `flags`冒泡
 
-**update 时:**
 
-beginWork:
 
-判断节点能否进行复用，如果不能复用则进行调和(reconcile)，为生成的子 fiberNode 标记副作用 flags
+## beginWork
 
-completeWork:
+`beginWork`阶段会针对不同的wip.tag进入不同组件的处理逻辑，比较重要的一点是如果此时是Update行为，会进行是否可以复用的优化判断，如果没有命中优化策略，则会进入`reconcileChildren`函数调用
 
-标记删除“更新前有，更新后无”的属性，标记更新“update 流程前后发生改变的属性”，进行 flag 冒泡
+`reconcileChildren`函数首先会判断本次操作时`Mount`行为还是`Update`行为（非常容易！你只需要判断`current === null`），针对不同的行为，我们可以进行一些优化
 
-<br/>
+> 首先介绍一个工厂函数: 
+>
+> createChildFibers( shouldTrackSideEffects: boolean ): ( ...props ) => Fiber
+>
+> shouldTrackSideEffects含义为 是否追踪副作用/是否标记flags
+>
+> mountChildFiber = createChildFibers(false)
+>
+> reconcileChildFiber = createChildFibers(true)
 
-接下来我们随着一个样例讲一下细节：
+- **Mount行为**
+
+  **wip.child = mountChildFibers()**
+
+- **Update行为**
+
+  **wip.child = reconcileChildFibers()**
+
+
+
+`Mount`时不追踪副作用是一个优化策略，这一点在`completeWork`之后解释
+
+> Question-1：
+>
+> Mount是不追踪副作用的理由是什么？优化策略如何体现？
+
+`reconcileChildFibers`方法标记了`fiberNode`的"插入、删除、移动"行为（flags）
+
+至此，`beginWork`阶段创建了`wip`的子`fiberNode`并将他们连接成`fiberTree`
+
+
+
+## completeWork
+
+我们先解释一下`flags`冒泡，在`reconcile`阶段我们可能通过`reconcileChildFibers`方法为`fiberNode`进行了一些`flag`标记，这些`flags`行为会在`Renderer`的工作阶段——`commit`阶段进行兑现
+
+我们希望的是`Renderer`能够快速的、准确的获取到需要跟踪`flags`的`fiberNode`，这一点可以通过`flags`冒泡来实现
+
+```ts
+let subtreeFlags = NoFlags
+subtreeFlags |= child.subtreeFlags;
+subtreeFlags |= child.flags;
+completedWork.subtreFlags |= subtreeFlags;
+```
+
+![20230824-142831](/images/1.5.png)
+
+- Mount行为
+
+  - `createInstance`方法创建`fiberNode`对应的DOM元素
+
+  - `appendAllChildren`将下一层DOM元素插入"`createInstance`"方法创建的DOM元素中
+
+    具体逻辑为：
+
+    1. 从当前`fiberNode`向下遍历，将遍历到的第一层DOM元素（HostComponent、HostText）类型通过`appendChild`方法插入parent末尾
+    2. 对兄弟`fiberNode`执行步骤1
+    3. 如果没有兄弟`fiberNode`，则对父`fiberNode`执行步骤1
+    4. 遍历流程回到最初执行步骤1所在层或者`parent`所在层时终止
+
+  - `finalizeIntailChildren`设置DOM元素属性
+
+过程不难理解，但我们还是走一遍全流程
+
+> fiberNode.stateNode属性指向其对应的真实DOM元素
 
 ```html
 <!-- dom结构大概是这样 -->
@@ -47,68 +108,94 @@ completeWork:
 
 ![1.1](/images/1.1.png)
 
-<br/>
+mount 阶段执行流程如下：
 
-fiberNode 的创建是以深度优先算法创建的，在递归的递阶段执行 beginWork，归阶段执行 completeWork
+1. HostRootFiber beginWork
 
-> 已知存在全局变量**workInProgress**表示正在处理的 fiberNode[初始值为 HostRootFiber]，简称**wip**
+   创建` App fiberNode`
 
-mount 阶段执行流程如下：（update 阶段 beginWork 会判断能否复用原来的 fiberNode）
+2. App fiberNode beginWork
 
-1. HostRootFiber beginWork（创建 App fiberNode）
-2. App fiberNode beginWork（创建 div fiberNode）
-3. div fiberNode beginWork（创建"Hello" fiberNode、span fiberNode）
-4. "Hello" fiberNode beginWork（叶子元素）
+   创建 `div fiberNode`
+
+3. div fiberNode beginWork
+
+   创建`"Hello" fiberNode、span fiberNode`
+
+4. "Hello" fiberNode beginWork
+
+   叶子元素
+
 5. "Hello" fiberNode completeWork
-6. span fiberNode beginWork（叶子元素）
+
+   向下遍历无`fiberNode`
+
+   ```tsx
+   fiberNode.stateNode = instance = "Hello"
+   ```
+
+6. span fiberNode beginWork
+
+   叶子元素
+
 7. span fiberNode completeWork
+
+   ```tsx
+   fiberNode.stateNode = instance = <span></span>
+   ```
+
 8. div fiberNode completeWork
+
+   向下遍历到`span fiberNode`和`"Hello" fiberNode`，调用`appendInitialChild(instance, wip)`方法插入`div fiberNode`通过`createInstance`创建的`instance`上
+
+   ```tsx
+   appendInitialChild(instance, workInProgress.child.stateNode, ...props);
+   /**
+   实际上就是instance.appendChild(workInProgress.child.stateNode)
+   */
+   fiberNode.stateNode = instance = <div>"Hello"<span></span></div>
+   ```
+
 9. App fiberNode completeWork
+
+   与8同理，但由于App组件并无其他内容
+
+   ```tsx
+   fiberNode.stateNode = instance = <div>"Hello"<span></span></div>
+   ```
+
 10. HostRootFiber completeWork
 
-<br/>
-
-这里给出一段书上定义：
-
-> （P92-93）
+> Answer-1：
 >
-> 在 mount 流程中，其首先通过 createInstance 方法创建"fiberNode 对应的 DOM 元素"，然后执行 appendAllChildren 方法，将下一层 DOM 元素插入“createInstance 方法创建的 DOM 元素"中，具体逻辑为：
+> 观察appendAllChildren行为，你会发现在completeWork阶段每一个fiberNode上都存在了一个stateNode属性，他是包含了children fiberNode节点stateNode的一个真实DOM元素（也就是一个离屏DOM）
 >
-> 1. 从当前 fiberNode 向下遍历，将遍历到的第一层 DOM 元素类型（HostComponent、HostText）通过 appendChild 方法插入 parent 末尾
-> 2. 对兄弟 fiberNode 执行步骤 1
-> 3. 如果没有兄弟 fiberNode，则对父 fiberNode 的兄弟执行步骤 1
-> 4. 当遍历流程回到最初步骤 1 所在层或者 parent 所在层时中止
+> 事实上在mount时构建wip fiberTree时并非所有fiberNode都没有alternate属性，比如HostRootFiber就存在alternate属性的（HostRootFiber.current !== null）
 >
-> 需要注意的是，fiberNode 层级和 DOM 元素层级可能不相同
+> 也就是说对于HostRootFiber而言他将会执行的时reconcileChildFiber()，它本身是被标记了flags的
+>
+> HostRootFiber在经过completeWork阶段后，获得了一颗完整的离屏DOM Tree（HostRootFiber.stateNode），最终一次插入DOM中，更节省性能。如果为每一个mount的fiberNode都标记flags，那么就会进行多次appendChild或insertBefore操作，性能开销更大
 
-![1.1](/images\1.1.png)
+- Update行为
 
-<br/>
+  Update行为的逻辑主要在函数`diffProperties()`中，他包含两次遍历
 
-我们还是以这个图举例，第一次执行的 completeWork 为"Hello" fiberNode completeWork，执行流程如下：
+  - 第一次遍历，标记删除更**新前有，更新后无**的属性
+  - 第二次遍历，标记更新**Update流程前后发生改变**的属性
 
-1. 创建"Hello" fiberNode 对应的 DOM 元素
-2. 执行 appendAllChildren 方法，此时他是叶子节点，无下一层 DOM 元素。设置"Hello" DOM Element 属性
-3. 接下来是 span fiberNode 执行 beginWork 和 completeWork
-4. div fiberNode 执行 completeWork，创建 div fiberNode 对应的 DOM 元素，将"Hello"和 span 插入 div fiberNode 对应的 DOM 元素中。设置 div DOM Element 属性
-5. App fiberNode 同理
+  `diffProperties`方法返回一个被标记的变化属性数组，相邻两项作为属性的(key, value)
 
-执行结束后形成了一颗完整离层 DOM 树
+  所有的变化都会保存到`fiberNode.updateQueue`中，并且`fiberNode`会被标记Update flag
 
-flag 冒泡是因为 Renderer 需要对“被标记的 fiberNode 对应的 DOM 元素”执行“flags 对应的 DOM 操作”，所以经由如下操作可将 flag 冒泡一层：
+> Question-2：
+>
+> 采用相邻两项作为属性的(key, value)对比更符合语义化的Array<{key:string, value:any}>有什么优势？
 
-```ts
-let subtreeFlags = NoFlags;
-subtreeFlags |= child.subtreeFlags;
-subtreeFlags |= child.flags;
-completedWork.subtreFlags |= subtreeFlags;
-```
+> Answer-2：（我也没看出啥名堂，听gpt怎么说）
+>
+> - 性能：开辟对象空间占用更高，这种方法对内存占用更少
+> - 高效：遍历以及对内容处理更高效
+> - 顺序保障：保障数据顺序的一致性
+>
+> 没太理解2，3点
 
-<br/>
-
-completeWork 的 update 阶段稍有不同，他会进行两次遍历：
-
-1. 第一次遍历，标记删除“更新前有，更新后无”的属性
-2. 第二次遍历，标记更新“update 流程前后发生改变”的属性
-
-所有的变化都会保存到 fiberNode.updateQueue 中并且该 fiberNode 会标记 Update 的 flag
