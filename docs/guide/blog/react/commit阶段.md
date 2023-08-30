@@ -1,10 +1,10 @@
-# commit阶段
+# commit 阶段
 
 `Renderer`工作阶段被称为`commit`阶段
 
 不同于`render`阶段可以被打断，`commit`阶段一旦开始就会执行到结束
 
-在不同的环境下会使用不同的`Renderer`，本章将用Web开发最常见的`ReactDOM`来讲解
+在不同的环境下会使用不同的`Renderer`，本章将用 Web 开发最常见的`ReactDOM`来讲解
 
 主要分为三个子阶段
 
@@ -21,7 +21,7 @@
 
   主要任务是：
 
-  - 进行DOM元素的增、删、改
+  - 进行 DOM 元素的增、删、改
 
 - **`Layout`**
 
@@ -29,9 +29,7 @@
 
   - 执行某些特殊情况下的回调
 
-
-
-每一个子阶段还要再细分为三个阶段：（xxx表示上面三个子阶段）
+每一个子阶段还要再细分为三个阶段：（xxx 表示上面三个子阶段）
 
 - **`commitXXXEffects()`**
 
@@ -39,7 +37,7 @@
 
   向下遍历到第一个满足如下条件之一的"`fiberNode`"
 
-  - 当前`fiberNode`的子`fiberNode`不包含"该子阶段对应的`flags`"，即当前`fiberNode`是包含该子阶段对应flag的层级最低的`fiberNode`
+  - 当前`fiberNode`的子`fiberNode`不包含"该子阶段对应的`flags`"，即当前`fiberNode`是包含该子阶段对应 flag 的层级最低的`fiberNode`
   - 当前`fiberNode`不存在子`fiberNode`，即当前`fiberNode`是叶子节点
 
   然后会执行下面的函数
@@ -62,8 +60,6 @@
 >
 > 部分子阶段都有一些“特有的操作”，具体哪个阶段是什么？
 
-
-
 ## BeforeMutation
 
 > Answer-1(1)：
@@ -80,39 +76,37 @@
 - `ClassComponent`：更新组件实例的`props`和`state`，执行`getSnapShotBeforeUpdate`生命周期
 - `HostRoot`：执行`clearContainer(finishedWork.stateNode.container)`，清空`HostRoot`挂载的内容，方便`Mutation`阶段渲染
 
-
-
 ## Mutation
 
 > Answer-1(2)：
 >
-> 删除DOM元素
+> 删除 DOM 元素
 
 `DOM3 Events`规范中有一个`DOM API`: `MutationObserver`
 
 在`commit`的`Mutation`阶段可以推断应该是操作`DOM`的行为
 
-> 18.2.0版本的源码中不存在commitMutationEffects_begin()和commitMutationEffects_complete()方法，由commitMutationEffects直接调用commitMutationEffectsOnFiber，在这个函数中再调用recursivelyTraverseMutationEffects
+> 18.2.0 版本的源码中不存在 commitMutationEffects_begin()和 commitMutationEffects_complete()方法，由 commitMutationEffects 直接调用 commitMutationEffectsOnFiber，在这个函数中再调用 recursivelyTraverseMutationEffects
 >
-> 所谓commitMutationEffects_begin和commitMutationEffects_complete方法是recursivelyTraverseMutationEffects方法的两个代码段
+> 所谓 commitMutationEffects_begin 和 commitMutationEffects_complete 方法是 recursivelyTraverseMutationEffects 方法的两个代码段
 
 - **删除`DOM`节点**
 
-  在`render`阶段的`beginWork`执行`reconcile`操作时添加了一个`fiberNode.deletions`数组，`Mutation`阶段将遍历这个数组，并执行`commitDeletionEffects()`方法删除DOM元素
+  在`render`阶段的`beginWork`执行`reconcile`操作时添加了一个`fiberNode.deletions`数组，`Mutation`阶段将遍历这个数组，并执行`commitDeletionEffects()`方法删除 DOM 元素
 
-  > 完整逻辑比较复杂，删除DOM元素还需要考虑很多逻辑
+  > 完整逻辑比较复杂，删除 DOM 元素还需要考虑很多逻辑
   >
-  > - 子树中所有组件的unmount逻辑
-  > - 子树中所有ref属性的卸载操作
-  > - 子树所有Effect相关Hook（比如useLauoutEffects回调）的执行
+  > - 子树中所有组件的 unmount 逻辑
+  > - 子树中所有 ref 属性的卸载操作
+  > - 子树所有 Effect 相关 Hook（比如 useLauoutEffects 回调）的执行
 
-- **插入、移动DOM元素**
+- **插入、移动 DOM 元素**
 
 ```ts
 function recursivelyTraverseMutationEffects(
   root: FiberRoot,
   parentFiber: Fiber,
-  lanes: Lanes,
+  lanes: Lanes
 ) {
   // commitMutationEffects_begin()
   const deletions = parentFiber.deletions;
@@ -126,7 +120,7 @@ function recursivelyTraverseMutationEffects(
       }
     }
   }
-      
+
   // commitMutationEffects_complete()
   const prevDebugFiber = getCurrentDebugFiberInDEV();
   if (parentFiber.subtreeFlags & MutationMask) {
@@ -145,36 +139,40 @@ function recursivelyTraverseMutationEffects(
 
 简而言之，这部分代码会"递归的遍历"（正如`recursivelyTraverseMutationEffects`名字）`fiberNode`，为`fiberNode`兑现其`flags`
 
+![img_v2_3d46928c-c82f-47f2-b8c7-80a1f442127l](/images/1.6.png)
+
+<br>
+
 对于不同的`fiberNode.tag`有不同的处理方法，以`HostComponent`的`Placement`举例：
 
 > 这里先介绍两个函数
 >
 > getHostParentFiber()
 >
-> 从当前fiberNode向上遍历，获取第一个类型为HostComponent、HostRoot、HostPortal三者之一的祖先fiberNode，其对应DOM元素是"执行DOM操作的目标元素的父级DOM元素"
+> 从当前 fiberNode 向上遍历，获取第一个类型为 HostComponent、HostRoot、HostPortal 三者之一的祖先 fiberNode，其对应 DOM 元素是"执行 DOM 操作的目标元素的父级 DOM 元素"
 >
 > getHostSibling()
 >
-> 向上寻找需要insertBefore(node, before)函数需要的before节点
+> 向上寻找需要 insertBefore(node, before)函数需要的 before 节点
 
-对于每一个节点，先调用`getHostParentFiber()`获取父级DOM元素，再调用`getHostSibling()`获取最低层级的无`Placement flag`的真实DOM元素
+对于每一个节点，先调用`getHostParentFiber()`获取父级 DOM 元素，再调用`getHostSibling()`获取最低层级的无`Placement flag`的真实 DOM 元素
 
 接下来的行为很简单，调用`insertOrAppendPlacementNode(finishedWork, before, parent)`
 
 `Mount`场景：
 
-- 如果`before`节点存在，则将目标DOM元素插入`before`之前
-- 如果`before`节点不存在，则将目标DOM元素作为父DOM的最后一个元素插入
+- 如果`before`节点存在，则将目标 DOM 元素插入`before`之前
+- 如果`before`节点不存在，则将目标 DOM 元素作为父 DOM 的最后一个元素插入
 
 `Update`场景：
 
-- 如果`before`节点存在，则将目标DOM元素移至`before`之前
+- 如果`before`节点存在，则将目标 DOM 元素移至`before`之前
 
-- 如果`before`节点不存在，则将目标DOM元素移至同级最后
+- 如果`before`节点不存在，则将目标 DOM 元素移至同级最后
 
-- 更新DOM元素
+- 更新 DOM 元素
 
-  > 书上写执行DOM元素更新是在commitWork()中，实际在18.2.0源码中更新部分内联在commitMutationEffectOnFiber里，最终执行的commitUpdate()为更新操作
+  > 书上写执行 DOM 元素更新是在 commitWork()中，实际在 18.2.0 源码中更新部分内联在 commitMutationEffectOnFiber 里，最终执行的 commitUpdate()为更新操作
 
   在`render`阶段的`completeWork`中，所有"变化属性的`[key, value]`"会保存在`fiberNode.updateQueue`，最终在`commitUpdate`中调用
 
@@ -183,7 +181,7 @@ function recursivelyTraverseMutationEffects(
 
   遍历并改变对于属性：
 
-  - style属性变化
+  - style 属性变化
   - innerHTML
   - 直接文本节点的变化
   - 其他元素属性
@@ -192,9 +190,9 @@ function recursivelyTraverseMutationEffects(
 
 > Answer-1(3)
 >
-> OffscreenComponent的显隐逻辑
+> OffscreenComponent 的显隐逻辑
 
-> 在18.2.0源码中同样不存在commitLayoutEffects_begin()和commitLayoutEffects_complete()，都是在commitLayoutEffects()中直接调用commitLayoutEffectsOnFiber()
+> 在 18.2.0 源码中同样不存在 commitLayoutEffects_begin()和 commitLayoutEffects_complete()，都是在 commitLayoutEffects()中直接调用 commitLayoutEffectsOnFiber()
 
 对于不同的`fiberNode.tag`有不同的处理方法：
 
@@ -208,6 +206,3 @@ function recursivelyTraverseMutationEffects(
 - `HostRoot`：执行`React.DOM.render(element, container, callback)`中的`callback`
 
 这两种情况下产生的`callback`会在`commitLayoutEffectOnFiber`中执行
-
-
-
