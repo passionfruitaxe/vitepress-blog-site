@@ -2,7 +2,7 @@
 
 `Reconciler` 工作阶段称为 `render` 阶段，本身是一个"DFS递归“的过程
 
-主要分为两个部分
+主要分为两个子阶段
 
 - `beginWork `
 
