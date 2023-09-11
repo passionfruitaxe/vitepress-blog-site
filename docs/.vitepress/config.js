@@ -61,13 +61,18 @@ export default {
               link: `${BLOG_PREFIX}/JavaScript中的浮点数.md`,
             },
             {
-              text: "从0搭建一个命令行CLI工具",
-              link: `${BLOG_PREFIX}/从0搭建一个命令行CLI工具.md`,
+              text: "作用域和上下文",
+              link: `${BLOG_PREFIX}/作用域和上下文.md`,
             },
             {
               text: "异步传染",
               link: `${BLOG_PREFIX}/异步传染.md`,
             },
+            {
+              text: "从0搭建一个命令行CLI工具",
+              link: `${BLOG_PREFIX}/从0搭建一个命令行CLI工具.md`,
+            },
+
           ],
         },
         {
