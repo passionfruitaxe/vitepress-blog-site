@@ -171,6 +171,10 @@ export default {
               text: "小米前端实习生二面",
               link: `${RECODE}/小米前端实习生二面.md`,
             },
+            {
+              text: "知乎校招前端一面",
+              link: `${RECODE}/知乎校招前端一面.md`,
+            },
           ],
         },
       ],
