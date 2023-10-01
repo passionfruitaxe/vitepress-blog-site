@@ -17,25 +17,30 @@ class MyPromise {
 
   static all(promises: Array<any>) {
     const result: any[] = [];
+    if(promises.length === 0) {
+        return new MyPromise(resolve => resolve(result));
+    }
+    let count = 0;
     return new MyPromise((resolve, reject) => {
-      const addData = (value: any) => {
-        result.push(value);
-        if (result.length === promises.length) {
+      const addData = (value: any, index: number) => {
+        result[index] = value;
+        count++;
+        if (count === promises.length) {
           resolve(result);
         }
       };
-      promises.forEach((promise) => {
+      promises.forEach((promise, index) => {
         if (promise instanceof MyPromise) {
           promise.then(
             (value) => {
-              addData(value);
+              addData(value, index);
             },
             (reason) => {
               reject(reason);
             }
           );
         } else {
-          addData(promise);
+          addData(promise, index);
         }
       });
     });
