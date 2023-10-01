@@ -179,6 +179,10 @@ export default {
               text: "美团优选事业部校招一面",
               link: `${RECODE}/美团优选事业部校招一面.md`,
             },
+            {
+              text: "美团优选事业部校招二面",
+              link: `${RECODE}/美团优选事业部校招二面.md`,
+            }
           ],
         },
       ],
