@@ -148,16 +148,12 @@ export default {
           collapsible: true,
           items: [
             {
-              text: "腾讯公众号&小程序团队实习一面",
+              text: "腾讯wxg前端实习生一面",
               link: `${RECODE}/腾讯公众号小程序团队前端实习生一面.md`,
             },
             {
-              text: "字节data部门实习一面",
+              text: "字节data部门前端实习生一面",
               link: `${RECODE}/字节data部门前端实习生一面.md`,
-            },
-            {
-              text: "站库前端实习生一面",
-              link: `${RECODE}/站库前端实习生一面.md`,
             },
             {
               text: "字节商业化部门前端实习生一面",
@@ -176,12 +172,12 @@ export default {
               link: `${RECODE}/知乎校招前端一面.md`,
             },
             {
-              text: "美团优选事业部校招一面",
-              link: `${RECODE}/美团优选事业部校招一面.md`,
+              text: "美团优选事业部校招前端一面",
+              link: `${RECODE}/美团优选事业部校招前端一面.md`,
             },
             {
-              text: "美团优选事业部校招二面",
-              link: `${RECODE}/美团优选事业部校招二面.md`,
+              text: "美团优选事业部校招前端二面",
+              link: `${RECODE}/美团优选事业部校招前端二面.md`,
             }
           ],
         },
