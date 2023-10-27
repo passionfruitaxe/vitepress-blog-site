@@ -172,12 +172,12 @@ export default {
               link: `${RECODE}/知乎校招前端一面.md`,
             },
             {
-              text: "美团优选事业部校招前端一面",
-              link: `${RECODE}/美团优选事业部校招前端一面.md`,
+              text: "美团快驴校招前端一面",
+              link: `${RECODE}/美团快驴校招前端一面.md`,
             },
             {
-              text: "美团优选事业部校招前端二面",
-              link: `${RECODE}/美团优选事业部校招前端二面.md`,
+              text: "美团快驴校招前端二面",
+              link: `${RECODE}/美团快驴校招前端二面.md`,
             }
           ],
         },
