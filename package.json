@@ -11,5 +11,8 @@
   "devDependencies": {
     "vitepress": "^1.0.0-alpha.17",
     "vue": "^3.2.40"
+  },
+  "volta": {
+    "node": "18.18.0"
   }
 }

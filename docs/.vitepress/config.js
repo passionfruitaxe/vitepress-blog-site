@@ -53,10 +53,6 @@ export default {
               link: `${BLOG_PREFIX}/自我介绍.md`,
             },
             {
-              text: "前端开发者的Flutter体验",
-              link: `${BLOG_PREFIX}/前端开发者的Flutter体验.md`,
-            },
-            {
               text: "JavaScript中的浮点数",
               link: `${BLOG_PREFIX}/JavaScript中的浮点数.md`,
             },
