@@ -15,7 +15,7 @@ export default {
   lastUpdated: true,
   head: [["link", { rel: "icon", href: "/favicon.ico" }]],
   markdown: {
-    theme: "material-palenight",
+    theme: "one-dark-pro",
     lineNumbers: true,
   },
   themeConfig: {

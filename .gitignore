@@ -24,3 +24,7 @@ yarn-error.log*
 .vscode
 .idea
 .github
+
+#volta
+.yarn
+.yarnrc.yml
