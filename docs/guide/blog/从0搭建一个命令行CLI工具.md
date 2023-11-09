@@ -554,3 +554,8 @@ class ViteBuilderForReact extends ViteBuilder {
 
 依赖之间的版本依赖，不同的版本还会有一些API废弃等，所以目前还是人工维护依赖，希望之后能找到更好的方法
 
+
+
+后续更新需求：
+
+开箱即用模板，基于配置文件修改内容的degit+execa方案，修改配置文件即可实现修改
