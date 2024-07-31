@@ -68,7 +68,10 @@ export default {
               text: "从0搭建一个命令行CLI工具",
               link: `${BLOG_PREFIX}/从0搭建一个命令行CLI工具.md`,
             },
-
+            {
+              text: "浏览器从输入URL后经过了什么",
+              link: `${BLOG_PREFIX}/浏览器从输入URL后经过了什么.md`,
+            },
           ],
         },
         {
