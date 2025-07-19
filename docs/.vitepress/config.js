@@ -4,9 +4,7 @@ import {
   BLOG_PREFIX,
   HAND_WRITE,
   RECODE,
-  LEETCODE,
-  REACT_PREFIX,
-  TYPESCRIPT_PREFIX,
+  REACT_PREFIX
 } from "./global";
 
 export default {
@@ -40,7 +38,7 @@ export default {
     nav: [
       { text: "首页", link: "/" },
       { text: "博客", link: `${BLOG_PREFIX}/自我介绍.md` },
-      { text: "面试", link: `${LEETCODE}/力扣算法题单.md` },
+      { text: "面试", link: `${HAND_WRITE}/手撕题目.md` },
     ],
     sidebar: {
       "/guide/blog/": [
@@ -99,16 +97,6 @@ export default {
       ],
       "/guide/interview": [
         {
-          text: "LeetCode",
-          collapsible: true,
-          items: [
-            {
-              text: "力扣算法题单",
-              link: `${LEETCODE}/力扣算法题单.md`,
-            },
-          ],
-        },
-        {
           text: "面试手写题目",
           collapsible: true,
           items: [
@@ -147,15 +135,15 @@ export default {
           collapsible: true,
           items: [
             {
-              text: "腾讯wxg前端实习生一面",
+              text: "腾讯实习生一面",
               link: `${RECODE}/腾讯公众号小程序团队前端实习生一面.md`,
             },
             {
-              text: "字节data部门前端实习生一面",
+              text: "字节前端实习生一面",
               link: `${RECODE}/字节data部门前端实习生一面.md`,
             },
             {
-              text: "字节商业化部门前端实习生一面",
+              text: "字节前端实习生一面",
               link: `${RECODE}/字节商业化部门前端实习生一面.md`,
             },
             {
@@ -171,11 +159,11 @@ export default {
               link: `${RECODE}/知乎校招前端一面.md`,
             },
             {
-              text: "美团快驴校招前端一面",
+              text: "美团校招前端一面",
               link: `${RECODE}/美团快驴校招前端一面.md`,
             },
             {
-              text: "美团快驴校招前端二面",
+              text: "美团校招前端二面",
               link: `${RECODE}/美团快驴校招前端二面.md`,
             }
           ],
